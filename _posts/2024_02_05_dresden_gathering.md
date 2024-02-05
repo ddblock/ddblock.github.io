@@ -1,4 +1,9 @@
-# Blockchain Gatherings aka Blockchain Stammtisch
+layout: post
+title: "Blockchain Stammtisch #2-2024"
+date: 2024-02-05 hh:mm:ss -0000
+categories: stammtisch,gathering,monero,farcaster,lens-protocol
+
+# Blockchain Gathering aka Blockchain Stammtisch
 
 ## Blockchain Stammtisch #2-2024
 
