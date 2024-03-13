@@ -3,7 +3,7 @@ layout: post
 title: "Blockchain Stammtisch #4 - 2024"
 date: 2024-03-05 10:00:00 -0000
 categories: stammtisch
-tags: ethereum, dencun-upgrade, blobs
+tags: ethereum,dencunupgrade,blobs
 ---
 
 # Blockchain Gathering aka Blockchain Stammtisch
