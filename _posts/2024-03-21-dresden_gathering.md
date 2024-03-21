@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Blockchain Stammtisch #4 - 2024"
-date: 2024-03-21 10:00:00 -0000
+date: 2024-03-21 08:00:00 -0000
 categories: stammtisch
 tags: ethereum,dencunupgrade,blobs,fees,portfolio
 ---
