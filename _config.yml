@@ -3,3 +3,4 @@ plugins:
 - jekyll-remote-theme
 title: Blockchain Meetup Saxony
 description: Up to date information including events and meetups.
+paginate: 5
