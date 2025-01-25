@@ -1,0 +1,50 @@
+---
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="de">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Dresden Blockchain Community" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body class="bg-blockchain-light min-h-screen">
+		<header class="bg-blockchain-primary text-white">
+			<nav class="max-w-4xl mx-auto px-4 py-6">
+				<div class="flex justify-between items-center">
+					<a href="/" class="text-2xl font-bold hover:text-blockchain-accent transition-colors">
+						Dresden Blockchain
+					</a>
+					<div class="flex gap-6">
+						<a href="/blog" class="hover:text-blockchain-accent transition-colors">Blog</a>
+						<a href="/about" class="hover:text-blockchain-accent transition-colors">About</a>
+					</div>
+				</div>
+			</nav>
+		</header>
+
+		<slot />
+
+		<footer class="bg-blockchain-primary text-white mt-16">
+			<div class="max-w-4xl mx-auto px-4 py-8">
+				<div class="text-center">
+					<p>&copy; {new Date().getFullYear()} Dresden Blockchain Community. All rights reserved.</p>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>
+
+<style is:global>
+	@tailwind base;
+	@tailwind components;
+	@tailwind utilities;
+</style> 

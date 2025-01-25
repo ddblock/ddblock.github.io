@@ -1,0 +1,120 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog');
+	return posts.map((post) => ({
+		params: { slug: post.slug },
+		props: post,
+	}));
+}
+type Props = CollectionEntry<'blog'>;
+
+const post = Astro.props;
+const { Content } = await post.render();
+
+// Format event date
+const eventDate = post.data.event_date?.toLocaleDateString('de-DE', {
+	weekday: 'long',
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+});
+
+const eventTime = post.data.event_date?.toLocaleTimeString('de-DE', {
+	hour: '2-digit',
+	minute: '2-digit',
+});
+---
+
+<Layout title={`${post.data.title} | Dresden Blockchain`}>
+	<main class="max-w-4xl mx-auto px-4 py-8">
+		<article class="prose prose-lg max-w-none">
+			<header class="mb-12">
+				<h1 class="text-5xl font-bold text-blockchain-primary mb-6 leading-tight">{post.data.title}</h1>
+				
+				{post.data.event_date && (
+					<div class="bg-gradient-to-br from-blockchain-light to-white rounded-xl p-8 mb-8 shadow-lg border border-blockchain-accent/10">
+						<div class="text-2xl font-semibold text-blockchain-primary mb-6">Nächstes Treffen</div>
+						<div class="flex flex-col md:flex-row gap-8 items-start">
+							<div class="flex-1 space-y-6">
+								<div class="flex items-start gap-4 text-blockchain-primary group">
+									<div class="bg-blockchain-accent/10 p-3 rounded-lg group-hover:bg-blockchain-accent/20 transition-colors">
+										<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+											<path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+										</svg>
+									</div>
+									<div>
+										<div class="font-semibold text-lg mb-1">Datum</div>
+										<div class="text-blockchain-secondary">{eventDate}</div>
+									</div>
+								</div>
+								<div class="flex items-start gap-4 text-blockchain-primary group">
+									<div class="bg-blockchain-accent/10 p-3 rounded-lg group-hover:bg-blockchain-accent/20 transition-colors">
+										<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+											<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+										</svg>
+									</div>
+									<div>
+										<div class="font-semibold text-lg mb-1">Uhrzeit</div>
+										<div class="text-blockchain-secondary">{eventTime} Uhr</div>
+									</div>
+								</div>
+							</div>
+							<div class="flex-1">
+								<div class="flex items-start gap-4 text-blockchain-primary group">
+									<div class="bg-blockchain-accent/10 p-3 rounded-lg group-hover:bg-blockchain-accent/20 transition-colors">
+										<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+											<path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+										</svg>
+									</div>
+									<div>
+										<div class="font-semibold text-lg mb-1">Location</div>
+										<div class="text-blockchain-secondary mb-2">{post.data.event_location_name}</div>
+										<a 
+											href={post.data.event_location_url} 
+											target="_blank" 
+											rel="noopener noreferrer"
+											class="inline-flex items-center gap-2 px-4 py-2 bg-blockchain-accent/10 hover:bg-blockchain-accent text-blockchain-primary hover:text-white rounded-lg transition-colors"
+										>
+											<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+												<path fill-rule="evenodd" d="M12 1.586l-4 4v12.828l4-4V1.586zM3.707 3.293A1 1 0 002 4v10a1 1 0 00.293.707L6 18.414V5.586L3.707 3.293zM17.707 5.293L14 1.586v12.828l4 4V6a1 1 0 00-.293-.707z" clip-rule="evenodd" />
+											</svg>
+											Auf Google Maps öffnen
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				)}
+
+				<div class="flex flex-wrap gap-4 items-center">
+					<time datetime={post.data.date.toISOString()} class="text-blockchain-secondary bg-blockchain-light/50 px-3 py-1 rounded-md">
+						{post.data.date.toLocaleDateString('de-DE', {
+							year: 'numeric',
+							month: 'long',
+							day: 'numeric',
+						})}
+					</time>
+					{post.data.tags && (
+						<div class="flex gap-2 flex-wrap">
+							{post.data.tags.map((tag) => (
+								<a 
+									href={`/tags/${tag}`}
+									class="px-3 py-1 bg-blockchain-light text-blockchain-primary text-sm rounded-full hover:bg-blockchain-accent hover:text-white transition-all duration-300 transform hover:scale-105"
+								>
+									#{tag}
+								</a>
+							))}
+						</div>
+					)}
+				</div>
+			</header>
+			<div class="prose prose-lg prose-headings:text-blockchain-primary prose-a:text-blockchain-accent hover:prose-a:text-blockchain-primary prose-a:no-underline hover:prose-a:underline">
+				<Content />
+			</div>
+		</article>
+	</main>
+</Layout>

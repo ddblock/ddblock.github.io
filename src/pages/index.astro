@@ -1,0 +1,65 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const latestPosts = (await getCollection('blog'))
+	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+	.slice(0, 3);
+---
+
+<Layout title="Dresden Blockchain">
+	<main>
+		<!-- Hero Section -->
+		<section class="bg-blockchain-primary text-white py-20">
+			<div class="max-w-4xl mx-auto px-4 text-center">
+				<h1 class="text-5xl font-bold mb-6">Dresden Blockchain Community</h1>
+				<p class="text-xl mb-8">
+					Wir sind eine Community von Blockchain-Enthusiasten in Dresden.
+					Tausche dich mit uns über die neuesten Entwicklungen in der Blockchain-Technologie aus.
+				</p>
+				<a
+					href="/blog"
+					class="inline-block bg-blockchain-accent text-white px-8 py-3 rounded-lg hover:bg-blockchain-primary border-2 border-blockchain-accent hover:border-blockchain-accent transition-colors"
+				>
+					Zum Blog
+				</a>
+			</div>
+		</section>
+
+		<!-- Latest Posts Section -->
+		<section class="py-16">
+			<div class="max-w-4xl mx-auto px-4">
+				<h2 class="text-3xl font-bold text-blockchain-primary mb-8">Neueste Beiträge</h2>
+				<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+					{
+						latestPosts.map((post) => (
+							<article class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+								<a href={`/blog/${post.slug}`}>
+									<h3 class="text-xl font-semibold text-blockchain-primary hover:text-blockchain-accent mb-3">
+										{post.data.title}
+									</h3>
+									<time datetime={post.data.date.toISOString()} class="text-blockchain-secondary">
+										{post.data.date.toLocaleDateString('de-DE', {
+											year: 'numeric',
+											month: 'long',
+											day: 'numeric',
+										})}
+									</time>
+									{post.data.tags && (
+										<div class="mt-3 flex gap-2 flex-wrap">
+											{post.data.tags.map((tag) => (
+												<span class="px-2 py-1 bg-blockchain-light text-blockchain-primary text-sm rounded-full">
+													{tag}
+												</span>
+											))}
+										</div>
+									)}
+								</a>
+							</article>
+						))
+					}
+				</div>
+			</div>
+		</section>
+	</main>
+</Layout>
