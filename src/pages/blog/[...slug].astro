@@ -29,23 +29,23 @@ const eventTime = post.data.event_date?.toLocaleTimeString('de-DE', {
 ---
 
 <Layout title={`${post.data.title} | Dresden Blockchain`}>
-  <main class="max-w-4xl mx-auto px-4 py-8">
-    <article class="prose prose-lg max-w-none">
+  <main class="container-base py-8">
+    <article>
       <header class="mb-12">
-        <h1 class="text-5xl font-bold text-blockchain-primary mb-6 leading-tight">
+        <h1 class="heading-primary mb-6 leading-tight">
           {post.data.title}
         </h1>
 
         {
           post.data.event_date && (
-            <div class="bg-gradient-to-br from-blockchain-light to-white rounded-xl p-8 mb-8 shadow-lg border border-blockchain-accent/10">
-              <div class="text-2xl font-semibold text-blockchain-primary mb-6">
+            <div class="card-base card-hover p-8 mb-8">
+              <div class="heading-secondary mb-6">
                 Nächstes Treffen
               </div>
               <div class="flex flex-col md:flex-row gap-8 items-start">
                 <div class="flex-1 space-y-6">
                   <div class="flex items-start gap-4 text-blockchain-primary group">
-                    <div class="bg-blockchain-accent/10 p-3 rounded-lg group-hover:bg-blockchain-accent/20 transition-colors">
+                    <div class="icon-container">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-6 w-6"
@@ -65,7 +65,7 @@ const eventTime = post.data.event_date?.toLocaleTimeString('de-DE', {
                     </div>
                   </div>
                   <div class="flex items-start gap-4 text-blockchain-primary group">
-                    <div class="bg-blockchain-accent/10 p-3 rounded-lg group-hover:bg-blockchain-accent/20 transition-colors">
+                    <div class="icon-container">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-6 w-6"
@@ -87,7 +87,7 @@ const eventTime = post.data.event_date?.toLocaleTimeString('de-DE', {
                 </div>
                 <div class="flex-1">
                   <div class="flex items-start gap-4 text-blockchain-primary group">
-                    <div class="bg-blockchain-accent/10 p-3 rounded-lg group-hover:bg-blockchain-accent/20 transition-colors">
+                    <div class="icon-container">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-6 w-6"
@@ -110,7 +110,7 @@ const eventTime = post.data.event_date?.toLocaleTimeString('de-DE', {
                         href={post.data.event_location_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="inline-flex items-center gap-2 px-4 py-2 bg-blockchain-accent/10 hover:bg-blockchain-accent text-blockchain-primary hover:text-white rounded-lg transition-colors"
+                        class="tag-base tag-light tag-hover inline-flex items-center gap-2"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -135,10 +135,7 @@ const eventTime = post.data.event_date?.toLocaleTimeString('de-DE', {
         }
 
         <div class="flex flex-wrap gap-4 items-center">
-          <time
-            datetime={post.data.date.toISOString()}
-            class="text-blockchain-secondary bg-blockchain-light/50 px-3 py-1 rounded-md"
-          >
+          <time datetime={post.data.date.toISOString()} class="date-display">
             {
               post.data.date.toLocaleDateString('de-DE', {
                 year: 'numeric',
@@ -151,10 +148,7 @@ const eventTime = post.data.event_date?.toLocaleTimeString('de-DE', {
             post.data.tags && (
               <div class="flex gap-2 flex-wrap">
                 {post.data.tags.map((tag) => (
-                  <a
-                    href={`/tags/${tag}`}
-                    class="px-3 py-1 bg-blockchain-light text-blockchain-primary text-sm rounded-full hover:bg-blockchain-accent hover:text-white transition-all duration-300 transform hover:scale-105"
-                  >
+                  <a href={`/tags/${tag}`} class="tag-base tag-light tag-hover">
                     #{tag}
                   </a>
                 ))}
@@ -163,9 +157,7 @@ const eventTime = post.data.event_date?.toLocaleTimeString('de-DE', {
           }
         </div>
       </header>
-      <div
-        class="prose prose-lg prose-headings:text-blockchain-primary prose-a:text-blockchain-accent hover:prose-a:text-blockchain-primary prose-a:no-underline hover:prose-a:underline"
-      >
+      <div class="prose prose-lg max-w-none">
         <Content />
       </div>
     </article>
