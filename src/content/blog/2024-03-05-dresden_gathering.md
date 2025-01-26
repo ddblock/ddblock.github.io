@@ -1,9 +1,9 @@
 ---
-title: "Blockchain Stammtisch #4 - 2024"
+title: 'Blockchain Stammtisch #4 - 2024'
 date: 2024-03-05 10:00:00 -0000
 event_date: 2024-03-13 19:00:00 -0000
-event_location_name: "Rausch Dresden"
-event_location_url: "https://maps.app.goo.gl/7GBfjxZkRS2JtahC8"
+event_location_name: 'Rausch Dresden'
+event_location_url: 'https://maps.app.goo.gl/7GBfjxZkRS2JtahC8'
 categories: stammtisch
 tags: ethereum,dencunupgrade,blobs
 ---

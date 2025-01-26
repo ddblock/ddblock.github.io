@@ -1,60 +1,27 @@
 ---
-import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import PostList from '../../components/PostList.astro';
+import { getFilteredPaths } from '../../utils/collections';
+import type { GetStaticPaths } from 'astro';
 
-export async function getStaticPaths() {
-    const posts = await getCollection('blog');
-    const categories = [...new Set(posts.flatMap(post => post.data.categories || []))];
-    
-    return categories.map(category => ({
-        params: { category },
-        props: { posts: posts.filter(post => post.data.categories?.includes(category)) }
-    }));
-}
+export const getStaticPaths: GetStaticPaths = async () => {
+  return await getFilteredPaths('category');
+};
 
 const { category } = Astro.params;
 const { posts } = Astro.props;
+
+if (!category) {
+  throw new Error('Category parameter is required');
+}
 ---
 
 <Layout title={`Posts in category ${category} | Dresden Blockchain`}>
-    <main class="max-w-4xl mx-auto px-4 py-8">
-        <div class="mb-8">
-            <a href="/blog" class="text-blockchain-primary hover:text-blockchain-accent">← Back to all posts</a>
-        </div>
-        <h1 class="text-4xl font-bold text-blockchain-primary mb-8">Posts in category "{category}"</h1>
-        <div class="space-y-8">
-            {posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).map((post) => (
-                <article class="border-l-4 border-blockchain-accent pl-4 hover:border-blockchain-primary transition-colors">
-                    <a href={`/blog/${post.slug}`} class="block">
-                        <h2 class="text-2xl font-semibold text-blockchain-primary hover:text-blockchain-accent">
-                            {post.data.title}
-                        </h2>
-                        <div class="mt-2 text-blockchain-secondary">
-                            <time datetime={post.data.date.toISOString()}>
-                                {post.data.date.toLocaleDateString('de-DE', {
-                                    year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric',
-                                })}
-                            </time>
-                        </div>
-                        <div class="mt-2 flex gap-2 flex-wrap">
-                            {post.data.categories?.map((cat) => (
-                                <a 
-                                    href={`/categories/${cat}`}
-                                    class={`px-2 py-1 text-sm rounded-full ${
-                                        cat === category 
-                                            ? 'bg-blockchain-primary text-white' 
-                                            : 'bg-blockchain-light text-blockchain-primary hover:bg-blockchain-accent hover:text-white'
-                                    }`}
-                                >
-                                    {cat}
-                                </a>
-                            ))}
-                        </div>
-                    </a>
-                </article>
-            ))}
-        </div>
-    </main>
-</Layout> 
+  <PostList
+    posts={posts}
+    filterType="category"
+    filterValue={category}
+    title={`Posts in category "${category}"`}
+  />
+</Layout>
+

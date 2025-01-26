@@ -1,0 +1,28 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import PostCard from './PostCard.astro';
+
+interface Props {
+  posts: CollectionEntry<'blog'>[];
+  filterType: 'tag' | 'category';
+  filterValue: string;
+  title: string;
+}
+
+const { posts, filterType, filterValue, title } = Astro.props;
+const sortedPosts = posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<div class="max-w-4xl mx-auto px-4 py-8">
+  <nav class="mb-8">
+    <a href="/blog" class="text-blockchain-primary hover:text-blockchain-accent">← Back to all posts</a>
+  </nav>
+  
+  <h1 class="text-4xl font-bold text-blockchain-primary mb-8">{title}</h1>
+  
+  <div class="space-y-8">
+    {sortedPosts.map((post) => (
+      <PostCard post={post} filterType={filterType} filterValue={filterValue} />
+    ))}
+  </div>
+</div> 

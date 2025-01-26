@@ -1,0 +1,41 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '../utils/date';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  filterType: 'tag' | 'category';
+  filterValue: string;
+}
+
+const { post, filterType, filterValue } = Astro.props;
+const filterItems = filterType === 'tag' ? post.data.tags : post.data.categories;
+---
+
+<article class="border-l-4 border-blockchain-accent pl-4 hover:border-blockchain-primary transition-colors">
+  <a href={`/blog/${post.slug}`} class="group block">
+    <h2 class="text-2xl font-semibold text-blockchain-primary group-hover:text-blockchain-accent">
+      {post.data.title}
+    </h2>
+    
+    <time datetime={post.data.date.toISOString()} class="mt-2 block text-blockchain-secondary">
+      {formatDate(post.data.date)}
+    </time>
+    
+    <div class="mt-2 flex gap-2 flex-wrap">
+      {filterItems?.map((item) => (
+        <a
+          href={`/${filterType}s/${item}`}
+          class:list={[
+            'px-2 py-1 text-sm rounded-full transition-colors',
+            item === filterValue
+              ? 'bg-blockchain-primary text-white'
+              : 'bg-blockchain-light text-blockchain-primary hover:bg-blockchain-accent hover:text-white',
+          ]}
+        >
+          {item}
+        </a>
+      ))}
+    </div>
+  </a>
+</article> 

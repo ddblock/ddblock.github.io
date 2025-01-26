@@ -8,20 +8,22 @@ const { title, description, date } = Astro.props;
 ---
 
 <Layout title={title}>
-	<main class="max-w-4xl mx-auto px-4 py-8">
-		<article class="prose prose-lg max-w-none">
-			<div class="mb-8">
-				<h1 class="text-4xl font-bold text-blockchain-primary">{title}</h1>
-				{description && <p class="text-blockchain-secondary mt-2">{description}</p>}
-				<time datetime={date.toISOString()} class="text-blockchain-secondary">
-					{date.toLocaleDateString('de-DE', {
-						year: 'numeric',
-						month: 'long',
-						day: 'numeric',
-					})}
-				</time>
-			</div>
-			<slot />
-		</article>
-	</main>
+  <main class="max-w-4xl mx-auto px-4 py-8">
+    <article class="prose prose-lg max-w-none">
+      <div class="mb-8">
+        <h1 class="text-4xl font-bold text-blockchain-primary">{title}</h1>
+        {description && <p class="text-blockchain-secondary mt-2">{description}</p>}
+        <time datetime={date.toISOString()} class="text-blockchain-secondary">
+          {
+            date.toLocaleDateString('de-DE', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })
+          }
+        </time>
+      </div>
+      <slot />
+    </article>
+  </main>
 </Layout>

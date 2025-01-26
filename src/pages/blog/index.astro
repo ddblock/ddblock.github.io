@@ -3,110 +3,152 @@ import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 
 const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
 
 // Get unique tags and categories
-const allTags = [...new Set(posts.flatMap(post => post.data.tags || []))].sort();
-const allCategories = [...new Set(posts.flatMap(post => post.data.categories || []))].sort();
+const allTags = [...new Set(posts.flatMap((post) => post.data.tags || []))].sort();
+const allCategories = [...new Set(posts.flatMap((post) => post.data.categories || []))].sort();
 ---
 
 <Layout title="Blog | Dresden Blockchain">
-	<main class="max-w-5xl mx-auto px-4 py-12">
-		<div class="text-center mb-16">
-			<h1 class="text-5xl font-bold text-blockchain-primary mb-6">Dresden Blockchain Events</h1>
-			<p class="text-xl text-blockchain-secondary max-w-2xl mx-auto">
-				Entdecke unsere Blockchain-Meetups, Stammtische und Events in Dresden. Tausche dich mit Gleichgesinnten aus und bleibe auf dem Laufenden.
-			</p>
-		</div>
+  <main class="max-w-5xl mx-auto px-4 py-12">
+    <div class="text-center mb-16">
+      <h1 class="text-5xl font-bold text-blockchain-primary mb-6">Dresden Blockchain Events</h1>
+      <p class="text-xl text-blockchain-secondary max-w-2xl mx-auto mb-6">
+        Entdecke unsere Blockchain-Meetups, Stammtische und Events in Dresden. Tausche dich mit
+        Gleichgesinnten aus und bleibe auf dem Laufenden.
+      </p>
+    </div>
 
-		<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-			<div class="bg-gradient-to-br from-blockchain-light to-white p-6 rounded-xl shadow-lg border border-blockchain-accent/10">
-				<h2 class="text-2xl font-semibold text-blockchain-primary mb-4 flex items-center gap-2">
-					<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-						<path fill-rule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
-					</svg>
-					Kategorien
-				</h2>
-				<div class="flex gap-3 flex-wrap">
-					{allCategories.map(category => (
-						<a
-							href={`/categories/${category}`}
-							class="px-4 py-2 bg-white text-blockchain-primary rounded-lg shadow-sm hover:shadow-md hover:bg-blockchain-accent hover:text-white transition-all duration-300 border border-blockchain-accent/10"
-						>
-							{category}
-						</a>
-					))}
-				</div>
-			</div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+      <div
+        class="bg-gradient-to-br from-blockchain-light to-white p-6 rounded-xl shadow-lg border border-blockchain-accent/10"
+      >
+        <h2 class="text-2xl font-semibold text-blockchain-primary mb-4 flex items-center gap-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z"
+              clip-rule="evenodd"></path>
+          </svg>
+          Kategorien
+        </h2>
+        <div class="flex gap-3 flex-wrap">
+          {
+            allCategories.map((category) => (
+              <a
+                href={`/categories/${category}`}
+                class="px-4 py-2 bg-white text-blockchain-primary rounded-lg shadow-sm hover:shadow-md hover:bg-blockchain-accent hover:text-white transition-all duration-300 border border-blockchain-accent/10"
+              >
+                {category}
+              </a>
+            ))
+          }
+        </div>
+      </div>
 
-			<div class="bg-gradient-to-br from-blockchain-light to-white p-6 rounded-xl shadow-lg border border-blockchain-accent/10">
-				<h2 class="text-2xl font-semibold text-blockchain-primary mb-4 flex items-center gap-2">
-					<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-						<path fill-rule="evenodd" d="M9.243 3.03a1 1 0 01.727 1.213L9.53 6h2.94l.56-2.243a1 1 0 111.94.486L14.53 6H17a1 1 0 110 2h-2.97l-1 4H15a1 1 0 110 2h-2.47l-.56 2.242a1 1 0 11-1.94-.485L10.47 14H7.53l-.56 2.242a1 1 0 11-1.94-.485L5.47 14H3a1 1 0 110-2h2.97l1-4H5a1 1 0 110-2h2.47l.56-2.243a1 1 0 011.213-.727zM9.03 8l-1 4h2.938l1-4H9.031z" clip-rule="evenodd" />
-					</svg>
-					Tags
-				</h2>
-				<div class="flex gap-2 flex-wrap">
-					{allTags.map(tag => (
-						<a
-							href={`/tags/${tag}`}
-							class="px-3 py-1.5 bg-white text-blockchain-primary text-sm rounded-full shadow-sm hover:shadow-md hover:bg-blockchain-accent hover:text-white transition-all duration-300 border border-blockchain-accent/10"
-						>
-							#{tag}
-						</a>
-					))}
-				</div>
-			</div>
-		</div>
+      <div
+        class="bg-gradient-to-br from-blockchain-light to-white p-6 rounded-xl shadow-lg border border-blockchain-accent/10"
+      >
+        <h2 class="text-2xl font-semibold text-blockchain-primary mb-4 flex items-center gap-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M9.243 3.03a1 1 0 01.727 1.213L9.53 6h2.94l.56-2.243a1 1 0 111.94.486L14.53 6H17a1 1 0 110 2h-2.97l-1 4H15a1 1 0 110 2h-2.47l-.56 2.242a1 1 0 11-1.94-.485L10.47 14H7.53l-.56 2.242a1 1 0 11-1.94-.485L5.47 14H3a1 1 0 110-2h2.97l1-4H5a1 1 0 110-2h2.47l.56-2.243a1 1 0 011.213-.727zM9.03 8l-1 4h2.938l1-4H9.031z"
+              clip-rule="evenodd"></path>
+          </svg>
+          Tags
+        </h2>
+        <div class="flex gap-2 flex-wrap">
+          {
+            allTags.map((tag) => (
+              <a
+                href={`/tags/${tag}`}
+                class="px-3 py-1.5 bg-white text-blockchain-primary text-sm rounded-full shadow-sm hover:shadow-md hover:bg-blockchain-accent hover:text-white transition-all duration-300 border border-blockchain-accent/10"
+              >
+                #{tag}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
 
-		<div class="space-y-8">
-			{posts.map((post) => (
-				<article class="group bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-blockchain-accent/10">
-					<a href={`/blog/${post.slug}`} class="block p-6">
-						<div class="flex flex-col md:flex-row gap-6 items-start">
-							{post.data.event_date && (
-								<div class="bg-blockchain-light rounded-lg p-4 md:w-48 text-center transform group-hover:scale-105 transition-transform">
-									<div class="text-2xl font-bold text-blockchain-primary">
-										{post.data.event_date.toLocaleDateString('de-DE', { day: 'numeric' })}
-									</div>
-									<div class="text-lg text-blockchain-secondary">
-										{post.data.event_date.toLocaleDateString('de-DE', { month: 'long' })}
-									</div>
-									<div class="mt-2 text-sm text-blockchain-primary font-medium">
-										{post.data.event_date.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })} Uhr
-									</div>
-								</div>
-							)}
-							<div class="flex-1">
-								<h2 class="text-2xl font-bold text-blockchain-primary group-hover:text-blockchain-accent transition-colors mb-3">
-									{post.data.title}
-								</h2>
-								{post.data.event_location_name && (
-									<div class="flex items-center gap-2 text-blockchain-secondary mb-4">
-										<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-											<path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-										</svg>
-										{post.data.event_location_name}
-									</div>
-								)}
-								<div class="flex flex-wrap gap-3">
-									{post.data.categories && post.data.categories.map((category) => (
-										<span class="px-3 py-1 bg-blockchain-light/50 text-blockchain-primary text-sm rounded-lg">
-											{category}
-										</span>
-									))}
-									{post.data.tags && post.data.tags.map((tag) => (
-										<span class="px-3 py-1 bg-white text-blockchain-primary text-sm rounded-full border border-blockchain-accent/10">
-											#{tag}
-										</span>
-									))}
-								</div>
-							</div>
-						</div>
-					</a>
-				</article>
-			))}
-		</div>
-	</main>
+    <div class="space-y-8">
+      {
+        posts.map((post) => (
+          <article class="group bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-blockchain-accent/10">
+            <a href={`/blog/${post.slug}`} class="block p-6">
+              <div class="flex flex-col md:flex-row gap-6 items-start">
+                {post.data.event_date && (
+                  <div class="bg-blockchain-light rounded-lg p-4 md:w-48 text-center transform group-hover:scale-105 transition-transform">
+                    <div class="text-2xl font-bold text-blockchain-primary">
+                      {post.data.event_date.toLocaleDateString('de-DE', { day: 'numeric' })}
+                    </div>
+                    <div class="text-lg text-blockchain-secondary">
+                      {post.data.event_date.toLocaleDateString('de-DE', { month: 'long' })}
+                    </div>
+                    <div class="mt-2 text-sm text-blockchain-primary font-medium">
+                      {post.data.event_date.toLocaleTimeString('de-DE', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })}{' '}
+                      Uhr
+                    </div>
+                  </div>
+                )}
+                <div class="flex-1">
+                  <h2 class="text-2xl font-bold text-blockchain-primary group-hover:text-blockchain-accent transition-colors mb-3">
+                    {post.data.title}
+                  </h2>
+                  {post.data.event_location_name && (
+                    <div class="flex items-center gap-2 text-blockchain-secondary mb-4">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      {post.data.event_location_name}
+                    </div>
+                  )}
+                  <div class="flex flex-wrap gap-3">
+                    {post.data.categories &&
+                      post.data.categories.map((category) => (
+                        <span class="px-3 py-1 bg-blockchain-light/50 text-blockchain-primary text-sm rounded-lg">
+                          {category}
+                        </span>
+                      ))}
+                    {post.data.tags &&
+                      post.data.tags.map((tag) => (
+                        <span class="px-3 py-1 bg-white text-blockchain-primary text-sm rounded-full border border-blockchain-accent/10">
+                          #{tag}
+                        </span>
+                      ))}
+                  </div>
+                </div>
+              </div>
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </main>
 </Layout>

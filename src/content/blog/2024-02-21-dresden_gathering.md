@@ -1,9 +1,9 @@
 ---
-title: "Blockchain Stammtisch #3 - 2024"
+title: 'Blockchain Stammtisch #3 - 2024'
 date: 2024-02-21 10:00:00 -0000
 event_date: 2024-02-20 19:30:00 -0000
-event_location_name: "Rausch Dresden"
-event_location_url: "https://maps.app.goo.gl/7GBfjxZkRS2JtahC8"
+event_location_name: 'Rausch Dresden'
+event_location_url: 'https://maps.app.goo.gl/7GBfjxZkRS2JtahC8'
 categories: stammtisch
 tags: blockchain,meetup,networking
 ---
