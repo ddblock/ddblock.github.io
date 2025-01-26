@@ -12,25 +12,25 @@ const { post, filterType, filterValue } = Astro.props;
 const filterItems = filterType === 'tag' ? post.data.tags : post.data.categories;
 ---
 
-<article class="border-l-4 border-blockchain-accent pl-4 hover:border-blockchain-primary transition-colors">
-  <a href={`/blog/${post.slug}`} class="group block">
-    <h2 class="text-2xl font-semibold text-blockchain-primary group-hover:text-blockchain-accent">
+<article class="post-card">
+  <a href={`/blog/${post.slug}`} class="post-link">
+    <h2 class="post-title">
       {post.data.title}
     </h2>
     
-    <time datetime={post.data.date.toISOString()} class="mt-2 block text-blockchain-secondary">
+    <time datetime={post.data.date.toISOString()} class="post-date">
       {formatDate(post.data.date)}
     </time>
     
-    <div class="mt-2 flex gap-2 flex-wrap">
+    <div class="post-tags">
       {filterItems?.map((item) => (
         <a
           href={`/${filterType}s/${item}`}
           class:list={[
-            'px-2 py-1 text-sm rounded-full transition-colors',
+            'post-tag',
             item === filterValue
-              ? 'bg-blockchain-primary text-white'
-              : 'bg-blockchain-light text-blockchain-primary hover:bg-blockchain-accent hover:text-white',
+              ? 'post-tag-active'
+              : 'post-tag-inactive',
           ]}
         >
           {item}
@@ -38,4 +38,44 @@ const filterItems = filterType === 'tag' ? post.data.tags : post.data.categories
       ))}
     </div>
   </a>
-</article> 
+</article>
+
+<style is:global>
+  /* Base styles */
+  .post-card {
+    @apply border-l-4 border-blockchain-accent hover:border-blockchain-primary;
+  }
+  .post-link {
+    @apply block pl-4;
+  }
+  .post-title {
+    @apply text-2xl text-blockchain-primary;
+  }
+  
+  /* Interactive states */
+  .post-link:hover .post-title {
+    @apply text-blockchain-accent;
+  }
+  
+  /* Content styles */
+  .post-date {
+    @apply mt-2 text-blockchain-secondary;
+  }
+  .post-tags {
+    @apply mt-2 flex flex-wrap gap-2;
+  }
+  
+  /* Tag styles */
+  .post-tag {
+    @apply rounded-full px-2 py-1 text-sm;
+  }
+  .post-tag-active {
+    @apply bg-blockchain-primary text-white;
+  }
+  .post-tag-inactive {
+    @apply bg-blockchain-light text-blockchain-primary;
+  }
+  .post-tag-inactive:hover {
+    @apply bg-blockchain-accent text-white;
+  }
+</style> 

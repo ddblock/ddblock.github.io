@@ -13,16 +13,42 @@ const { posts, filterType, filterValue, title } = Astro.props;
 const sortedPosts = posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
-<div class="max-w-4xl mx-auto px-4 py-8">
-  <nav class="mb-8">
-    <a href="/blog" class="text-blockchain-primary hover:text-blockchain-accent">← Back to all posts</a>
+<div class="container">
+  <nav>
+    <a href="/blog" class="nav-link">← Back to all posts</a>
   </nav>
   
-  <h1 class="text-4xl font-bold text-blockchain-primary mb-8">{title}</h1>
+  <h1 class="title">{title}</h1>
   
-  <div class="space-y-8">
+  <div class="posts">
     {sortedPosts.map((post) => (
       <PostCard post={post} filterType={filterType} filterValue={filterValue} />
     ))}
   </div>
-</div> 
+</div>
+
+<style is:global>
+  /* Layout */
+  .container {
+    @apply max-w-4xl mx-auto py-8;
+  }
+  
+  /* Navigation */
+  nav {
+    @apply mb-8;
+  }
+  .nav-link {
+    @apply text-blockchain-primary;
+  }
+  .nav-link:hover {
+    @apply text-blockchain-accent;
+  }
+  
+  /* Content */
+  .title {
+    @apply mb-8 text-4xl text-blockchain-primary;
+  }
+  .posts {
+    @apply space-y-8;
+  }
+</style> 

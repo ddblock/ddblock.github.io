@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  /* Layout */
+  .container-base {
+    @apply max-w-4xl mx-auto px-4;
+  }
+  
+  /* Typography */
+  .heading-primary {
+    @apply text-4xl font-bold text-blockchain-primary;
+  }
+  .heading-secondary {
+    @apply text-2xl font-semibold text-blockchain-primary;
+  }
+  
+  /* Cards */
+  .card-base {
+    @apply bg-white rounded-xl shadow-lg border border-blockchain-accent/10;
+  }
+  .card-hover {
+    @apply hover:shadow-xl transition-all duration-300;
+  }
+  
+  /* Links */
+  .link-primary {
+    @apply text-blockchain-primary hover:text-blockchain-accent transition-colors;
+  }
+  
+  /* Tags */
+  .tag-base {
+    @apply px-3 py-1.5 text-sm rounded-full;
+  }
+  .tag-light {
+    @apply bg-blockchain-light text-blockchain-primary;
+  }
+  .tag-active {
+    @apply bg-blockchain-primary text-white;
+  }
+  .tag-hover {
+    @apply hover:bg-blockchain-accent hover:text-white transition-all duration-300;
+  }
+  
+  /* Icons */
+  .icon-container {
+    @apply bg-blockchain-accent/10 p-3 rounded-lg hover:bg-blockchain-accent/20 transition-colors;
+  }
+  
+  /* Date display */
+  .date-display {
+    @apply text-blockchain-secondary bg-blockchain-light/50 px-3 py-1 rounded-md;
+  }
+} 

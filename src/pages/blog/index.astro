@@ -1,31 +1,19 @@
 ---
-import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
 
-const posts = (await getCollection('blog')).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-);
-
-// Get unique tags and categories
-const allTags = [...new Set(posts.flatMap((post) => post.data.tags || []))].sort();
-const allCategories = [...new Set(posts.flatMap((post) => post.data.categories || []))].sort();
+const posts = await getCollection('blog');
+const allTags = [...new Set(posts.flatMap((post) => post.data.tags || []))];
+const allCategories = [...new Set(posts.flatMap((post) => post.data.categories || []))];
 ---
 
 <Layout title="Blog | Dresden Blockchain">
-  <main class="max-w-5xl mx-auto px-4 py-12">
-    <div class="text-center mb-16">
-      <h1 class="text-5xl font-bold text-blockchain-primary mb-6">Dresden Blockchain Events</h1>
-      <p class="text-xl text-blockchain-secondary max-w-2xl mx-auto mb-6">
-        Entdecke unsere Blockchain-Meetups, Stammtische und Events in Dresden. Tausche dich mit
-        Gleichgesinnten aus und bleibe auf dem Laufenden.
-      </p>
-    </div>
+  <main class="container-base py-8">
+    <h1 class="heading-primary mb-8">Blog</h1>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-      <div
-        class="bg-gradient-to-br from-blockchain-light to-white p-6 rounded-xl shadow-lg border border-blockchain-accent/10"
-      >
-        <h2 class="text-2xl font-semibold text-blockchain-primary mb-4 flex items-center gap-2">
+      <div class="card-base card-hover p-6">
+        <h2 class="heading-secondary mb-4 flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-6 w-6"
@@ -44,7 +32,7 @@ const allCategories = [...new Set(posts.flatMap((post) => post.data.categories |
             allCategories.map((category) => (
               <a
                 href={`/categories/${category}`}
-                class="px-4 py-2 bg-white text-blockchain-primary rounded-lg shadow-sm hover:shadow-md hover:bg-blockchain-accent hover:text-white transition-all duration-300 border border-blockchain-accent/10"
+                class="tag-base tag-light tag-hover"
               >
                 {category}
               </a>
@@ -53,10 +41,8 @@ const allCategories = [...new Set(posts.flatMap((post) => post.data.categories |
         </div>
       </div>
 
-      <div
-        class="bg-gradient-to-br from-blockchain-light to-white p-6 rounded-xl shadow-lg border border-blockchain-accent/10"
-      >
-        <h2 class="text-2xl font-semibold text-blockchain-primary mb-4 flex items-center gap-2">
+      <div class="card-base card-hover p-6">
+        <h2 class="heading-secondary mb-4 flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-6 w-6"
@@ -75,7 +61,7 @@ const allCategories = [...new Set(posts.flatMap((post) => post.data.categories |
             allTags.map((tag) => (
               <a
                 href={`/tags/${tag}`}
-                class="px-3 py-1.5 bg-white text-blockchain-primary text-sm rounded-full shadow-sm hover:shadow-md hover:bg-blockchain-accent hover:text-white transition-all duration-300 border border-blockchain-accent/10"
+                class="tag-base tag-light tag-hover"
               >
                 #{tag}
               </a>
@@ -88,7 +74,7 @@ const allCategories = [...new Set(posts.flatMap((post) => post.data.categories |
     <div class="space-y-8">
       {
         posts.map((post) => (
-          <article class="group bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-blockchain-accent/10">
+          <article class="card-base card-hover overflow-hidden">
             <a href={`/blog/${post.slug}`} class="block p-6">
               <div class="flex flex-col md:flex-row gap-6 items-start">
                 {post.data.event_date && (
@@ -109,7 +95,7 @@ const allCategories = [...new Set(posts.flatMap((post) => post.data.categories |
                   </div>
                 )}
                 <div class="flex-1">
-                  <h2 class="text-2xl font-bold text-blockchain-primary group-hover:text-blockchain-accent transition-colors mb-3">
+                  <h2 class="heading-secondary group-hover:text-blockchain-accent transition-colors mb-3">
                     {post.data.title}
                   </h2>
                   {post.data.event_location_name && (
@@ -129,20 +115,6 @@ const allCategories = [...new Set(posts.flatMap((post) => post.data.categories |
                       {post.data.event_location_name}
                     </div>
                   )}
-                  <div class="flex flex-wrap gap-3">
-                    {post.data.categories &&
-                      post.data.categories.map((category) => (
-                        <span class="px-3 py-1 bg-blockchain-light/50 text-blockchain-primary text-sm rounded-lg">
-                          {category}
-                        </span>
-                      ))}
-                    {post.data.tags &&
-                      post.data.tags.map((tag) => (
-                        <span class="px-3 py-1 bg-white text-blockchain-primary text-sm rounded-full border border-blockchain-accent/10">
-                          #{tag}
-                        </span>
-                      ))}
-                  </div>
                 </div>
               </div>
             </a>
