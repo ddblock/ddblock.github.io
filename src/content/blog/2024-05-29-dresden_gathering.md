@@ -1,5 +1,5 @@
 ---
-title: 'Blockchain Stammtisch #7 - 2024'
+title: 'Blockchain Stammtisch Dresden'
 date: 2024-05-25 08:00:00 -0000
 event_date: 2024-05-29 08:00:00 -0000
 event_location_name: 'Bottoms Up'

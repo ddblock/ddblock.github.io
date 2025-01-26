@@ -1,5 +1,5 @@
 ---
-title: 'Blockchain Stammtisch #2 - 2024'
+title: 'Blockchain Stammtisch Dresden'
 date: 2024-02-05 10:00:00 -0000
 event_date: 2024-02-07 19:00:00 -0000
 event_location_name: 'Rausch Dresden'
@@ -10,7 +10,7 @@ tags: monero,farcaster,lens-protocol
 
 # Blockchain Gathering aka Blockchain Stammtisch
 
-## Blockchain Stammtisch #2 - 2024
+## Blockchain Stammtisch
 
 - 📍 [Rausch Dresden, Bürgerstraße 36](https://maps.app.goo.gl/7GBfjxZkRS2JtahC8)
 - 📅 07.02.2024 - 19:00 Uhr

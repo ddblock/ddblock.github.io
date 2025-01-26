@@ -1,6 +1,7 @@
 ---
 import { type CollectionEntry, getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import { getEventNumber, formatTitle } from '../../utils/eventNumbering';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -13,6 +14,11 @@ type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
 const { Content } = await post.render();
+
+// Get all posts to calculate event number
+const allPosts = await getCollection('blog');
+const eventNumber = getEventNumber(post, allPosts);
+const displayTitle = formatTitle(post, eventNumber);
 
 // Format event date
 const eventDate = post.data.event_date?.toLocaleDateString('de-DE', {
@@ -28,12 +34,12 @@ const eventTime = post.data.event_date?.toLocaleTimeString('de-DE', {
 });
 ---
 
-<Layout title={`${post.data.title} | Dresden Blockchain`}>
+<Layout title={`${displayTitle} | Dresden Blockchain`}>
   <main class="container-base py-8">
     <article>
       <header class="mb-12">
         <h1 class="heading-primary mb-6 leading-tight">
-          {post.data.title}
+          {displayTitle}
         </h1>
 
         {
