@@ -2,14 +2,17 @@
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 import { getEventNumber, formatTitle } from '../../utils/eventNumbering';
+import CategoryIcon from '../../components/icons/CategoryIcon.astro';
+import TagIcon from '../../components/icons/TagIcon.astro';
+import PostCard from '../../components/PostCard.astro';
 
 const posts = await getCollection('blog');
-const allTags = [...new Set(posts.flatMap((post) => post.data.tags || []))];
-const allCategories = [...new Set(posts.flatMap((post) => post.data.categories || []))];
+const allTags = [...new Set(posts.flatMap((post) => post.data.tags))];
+const allCategories = [...new Set(posts.map((post) => post.data.categories))];
 
 // Helper function to check if event is in the future
-const isFutureEvent = (date?: Date) => {
-  if (!date) return false;
+const isFutureEvent = (date?: Date | 'TBD') => {
+  if (!(date instanceof Date)) return false;
   const now = new Date();
   // Reset time to start of day for comparison
   now.setHours(0, 0, 0, 0);
@@ -18,16 +21,28 @@ const isFutureEvent = (date?: Date) => {
   return eventDate >= now;
 };
 
-// Sort posts: future events first (by date), then past events (newest first)
+// Sort posts: future events first (by date), then TBD events, then past events (newest first)
 const sortedPosts = posts.sort((a, b) => {
   const aIsFuture = isFutureEvent(a.data.event_date);
   const bIsFuture = isFutureEvent(b.data.event_date);
+  const aIsTBD = a.data.event_date === 'TBD';
+  const bIsTBD = b.data.event_date === 'TBD';
   
+  // Future events first
   if (aIsFuture && !bIsFuture) return -1;
   if (!aIsFuture && bIsFuture) return 1;
   
+  // Then TBD events
+  if (aIsTBD && !bIsTBD) return -1;
+  if (!aIsTBD && bIsTBD) return 1;
+  
   // If both are future events or both are past events, sort by date
-  return b.data.event_date?.getTime() - a.data.event_date?.getTime();
+  if (a.data.event_date instanceof Date && b.data.event_date instanceof Date) {
+    return b.data.event_date.getTime() - a.data.event_date.getTime();
+  }
+  
+  // If we get here, sort by post date
+  return b.data.date.getTime() - a.data.date.getTime();
 });
 ---
 
@@ -38,17 +53,7 @@ const sortedPosts = posts.sort((a, b) => {
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
       <div class="card-base card-hover p-6">
         <h2 class="heading-secondary mb-4 flex items-center gap-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z"
-              clip-rule="evenodd"></path>
-          </svg>
+          <CategoryIcon class="h-6 w-6" />
           Kategorien
         </h2>
         <div class="flex gap-3 flex-wrap">
@@ -67,17 +72,7 @@ const sortedPosts = posts.sort((a, b) => {
 
       <div class="card-base card-hover p-6">
         <h2 class="heading-secondary mb-4 flex items-center gap-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M9.243 3.03a1 1 0 01.727 1.213L9.53 6h2.94l.56-2.243a1 1 0 111.94.486L14.53 6H17a1 1 0 110 2h-2.97l-1 4H15a1 1 0 110 2h-2.47l-.56 2.242a1 1 0 11-1.94-.485L10.47 14H7.53l-.56 2.242a1 1 0 11-1.94-.485L5.47 14H3a1 1 0 110-2h2.97l1-4H5a1 1 0 110-2h2.47l.56-2.243a1 1 0 011.213-.727zM9.03 8l-1 4h2.938l1-4H9.031z"
-              clip-rule="evenodd"></path>
-          </svg>
+          <TagIcon class="h-6 w-6" />
           Tags
         </h2>
         <div class="flex gap-2 flex-wrap">
@@ -99,65 +94,17 @@ const sortedPosts = posts.sort((a, b) => {
       {
         sortedPosts.map((post) => {
           const isUpcoming = isFutureEvent(post.data.event_date);
+          const isTBD = post.data.event_date === 'TBD';
           const eventNumber = getEventNumber(post, posts);
           const displayTitle = formatTitle(post, eventNumber);
           return (
-            <article class:list={[
-              'card-base card-hover overflow-hidden',
-              { 'border-l-8 border-l-blockchain-accent': isUpcoming }
-            ]}>
-              <a href={`/blog/${post.slug}`} class="block p-6">
-                <div class="flex flex-col md:flex-row gap-6 items-start">
-                  {post.data.event_date && (
-                    <div class:list={[
-                      'bg-blockchain-light rounded-lg p-4 md:w-48 text-center transform group-hover:scale-105 transition-transform',
-                      { 'bg-blockchain-accent/10': isUpcoming }
-                    ]}>
-                      <div class="text-2xl font-bold text-blockchain-primary">
-                        {post.data.event_date.toLocaleDateString('de-DE', { day: 'numeric' })}
-                      </div>
-                      <div class="text-lg text-blockchain-secondary">
-                        {post.data.event_date.toLocaleDateString('de-DE', { month: 'long' })}
-                      </div>
-                      <div class="mt-2 text-sm text-blockchain-primary font-medium">
-                        {post.data.event_date.toLocaleTimeString('de-DE', {
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        })}{' '}
-                        Uhr
-                      </div>
-                      {isUpcoming && (
-                        <div class="mt-3 text-sm font-semibold text-blockchain-accent">
-                          Nächstes Event
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  <div class="flex-1">
-                    <h2 class="heading-secondary group-hover:text-blockchain-accent transition-colors mb-3">
-                      {displayTitle}
-                    </h2>
-                    {post.data.event_location_name && (
-                      <div class="flex items-center gap-2 text-blockchain-secondary mb-4">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          class="h-5 w-5"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                            clip-rule="evenodd"
-                          />
-                        </svg>
-                        {post.data.event_location_name}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </a>
-            </article>
+            <PostCard
+              post={post}
+              isUpcoming={isUpcoming}
+              isTBD={isTBD}
+              eventNumber={eventNumber}
+              displayTitle={displayTitle}
+            />
           );
         })
       }

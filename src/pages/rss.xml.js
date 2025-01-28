@@ -9,8 +9,17 @@ export async function GET(context) {
     description: SITE_DESCRIPTION,
     site: context.site,
     items: posts.map((post) => ({
-      ...post.data,
-      link: `/blog/${post.id}/`,
+      title: post.data.title,
+      description: post.data.description || '',
+      pubDate: post.data.date,
+      link: `/blog/${post.slug}/`,
+      // Optional fields
+      categories: [post.data.categories, ...(post.data.tags || [])],
+      content: post.data.event_date instanceof Date 
+          ? `Event Date: ${post.data.event_date.toLocaleDateString('de-DE')}${post.data.event_location_name ? ` at ${post.data.event_location_name}` : ''}`
+          : post.data.event_date === 'TBD' 
+              ? 'Event Date: To be determined'
+              : '',
     })),
   });
 }

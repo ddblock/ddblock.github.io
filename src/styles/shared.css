@@ -52,4 +52,12 @@
   .date-display {
     @apply text-blockchain-secondary bg-blockchain-light/50 px-3 py-1 rounded-md;
   }
+
+  .highlight {
+    @apply shadow-lg shadow-blockchain-accent/50;
+
+    &:hover {
+      @apply shadow-xl shadow-blockchain-accent/70;
+    }
+  }
 } 

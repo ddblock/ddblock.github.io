@@ -1,24 +1,21 @@
 import { defineCollection, z } from 'astro:content';
 
 const blog = defineCollection({
-  type: 'content',
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),
-    event_date: z.coerce.date(),
-    event_location_name: z.string(),
-    event_location_url: z.string(),
-    categories: z
-      .string()
-      .transform((val) => val.split(',').map((s) => s.trim()))
-      .optional(),
-    tags: z
-      .string()
-      .transform((val) => val.split(',').map((s) => s.trim()))
-      .optional(),
-    draft: z.boolean().optional(),
+    event_date: z.union([
+      z.coerce.date(),
+      z.literal('TBD')
+    ]).optional(),
+    event_location_name: z.string().optional(),
+    event_location_url: z.string().url().optional(),
+    categories: z.string(),
+    tags: z.string().transform(str => str.split(',').map(s => s.trim())),
     description: z.string().optional(),
   }),
 });
 
-export const collections = { blog };
+export const collections = {
+  blog,
+};

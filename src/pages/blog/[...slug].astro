@@ -2,6 +2,11 @@
 import { type CollectionEntry, getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import { getEventNumber, formatTitle } from '../../utils/eventNumbering';
+import { generateICS } from '../../utils/icsGenerator';
+import CalendarIcon from '../../components/icons/CalendarIcon.astro';
+import LocationIcon from '../../components/icons/LocationIcon.astro';
+import TimeIcon from '../../components/icons/TimeIcon.astro';
+import MapIcon from '../../components/icons/MapIcon.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -20,18 +25,34 @@ const allPosts = await getCollection('blog');
 const eventNumber = getEventNumber(post, allPosts);
 const displayTitle = formatTitle(post, eventNumber);
 
-// Format event date
-const eventDate = post.data.event_date?.toLocaleDateString('de-DE', {
-  weekday: 'long',
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-});
+// Format event date if available
+const eventDate = post.data.event_date instanceof Date 
+  ? post.data.event_date.toLocaleDateString('de-DE', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  : 'Wird noch bekannt gegeben';
 
-const eventTime = post.data.event_date?.toLocaleTimeString('de-DE', {
-  hour: '2-digit',
-  minute: '2-digit',
-});
+const eventTime = post.data.event_date instanceof Date
+  ? post.data.event_date.toLocaleTimeString('de-DE', {
+      hour: '2-digit',
+      minute: '2-digit',
+    }) + ' Uhr'
+  : 'TBD';
+
+// Generate ICS file content if this is an event with a date
+const icsContent = post.data.event_date instanceof Date ? generateICS({
+  title: displayTitle,
+  startDate: post.data.event_date,
+  location: post.data.event_location_name || '',
+  locationUrl: post.data.event_location_url || '',
+  description: post.data.description,
+}) : null;
+
+// Create data URL for download
+const icsDataUrl = icsContent ? `data:text/calendar;charset=utf-8,${encodeURIComponent(icsContent)}` : null;
 ---
 
 <Layout title={`${displayTitle} | Dresden Blockchain`}>
@@ -43,98 +64,72 @@ const eventTime = post.data.event_date?.toLocaleTimeString('de-DE', {
         </h1>
 
         {
-          post.data.event_date && (
+          post.data.categories === 'stammtisch' && (
             <div class="card-base card-hover p-8 mb-8">
               <div class="heading-secondary mb-6">
-                Nächstes Treffen
+                {post.data.event_date === 'TBD' ? 'Geplantes Treffen' : 'Nächstes Treffen'}
               </div>
-              <div class="flex flex-col md:flex-row gap-8 items-start">
-                <div class="flex-1 space-y-6">
-                  <div class="flex items-start gap-4 text-blockchain-primary group">
-                    <div class="icon-container">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                          clip-rule="evenodd"
-                        />
-                      </svg>
-                    </div>
-                    <div>
-                      <div class="font-semibold text-lg mb-1">Datum</div>
-                      <div class="text-blockchain-secondary">{eventDate}</div>
-                    </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <div class="flex items-start gap-4 text-blockchain-primary group">
+                  <div class="icon-container">
+                    <TimeIcon class="h-6 w-6" />
                   </div>
-                  <div class="flex items-start gap-4 text-blockchain-primary group">
-                    <div class="icon-container">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                          clip-rule="evenodd"
-                        />
-                      </svg>
-                    </div>
-                    <div>
-                      <div class="font-semibold text-lg mb-1">Uhrzeit</div>
-                      <div class="text-blockchain-secondary">{eventTime} Uhr</div>
-                    </div>
+                  <div>
+                    <div class="font-semibold text-lg mb-1">Datum & Uhrzeit</div>
+                    <div class="text-blockchain-secondary">{eventDate}</div>
+                    {post.data.event_date instanceof Date && (
+                      <div class="text-blockchain-secondary mt-1">{eventTime}</div>
+                    )}
                   </div>
                 </div>
-                <div class="flex-1">
+                {post.data.event_date instanceof Date && (
                   <div class="flex items-start gap-4 text-blockchain-primary group">
                     <div class="icon-container">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
+                      <CalendarIcon class="h-6 w-6" />
+                    </div>
+                    <div>
+                      <div class="font-semibold text-lg mb-1">Erinnerung</div>
+                      <a
+                        href={icsDataUrl}
+                        download={`${post.slug}.ics`}
+                        class="text-blockchain-secondary hover:text-blockchain-accent transition-colors"
                       >
-                        <path
-                          fill-rule="evenodd"
-                          d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                          clip-rule="evenodd"
-                        />
-                      </svg>
+                        Zum Kalender hinzufügen
+                      </a>
+                    </div>
+                  </div>
+                )}
+                {post.data.event_location_name && (
+                  <div class="flex items-start gap-4 text-blockchain-primary group">
+                    <div class="icon-container">
+                      <LocationIcon class="h-6 w-6" />
                     </div>
                     <div>
                       <div class="font-semibold text-lg mb-1">Location</div>
                       <div class="text-blockchain-secondary mb-2">
                         {post.data.event_location_name}
                       </div>
-                      <a
-                        href={post.data.event_location_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="tag-base tag-light tag-hover inline-flex items-center gap-2"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          class="h-5 w-5"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            d="M12 1.586l-4 4v12.828l4-4V1.586zM3.707 3.293A1 1 0 002 4v10a1 1 0 00.293.707L6 18.414V5.586L3.707 3.293zM17.707 5.293L14 1.586v12.828l4 4V6a1 1 0 00-.293-.707z"
-                            clip-rule="evenodd"
-                          />
-                        </svg>
-                        Auf Google Maps öffnen
-                      </a>
                     </div>
                   </div>
-                </div>
+                )}
+                {post.data.event_location_url && (
+                  <a 
+                    class="flex items-start gap-4 text-blockchain-primary group hover:text-blockchain-accent transition-colors"
+                    href={post.data.event_location_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <div class="icon-container">
+                      <MapIcon class="h-6 w-6" />
+                    </div>
+                    <div>
+                      <div class="font-semibold text-lg mb-1">Wegbeschreibung</div>
+                      <div class="text-blockchain-secondary group-hover:text-blockchain-accent transition-colors">
+                        Auf Google Maps öffnen
+                      </div>
+                    </div>
+                  </a>
+                )}
               </div>
             </div>
           )
