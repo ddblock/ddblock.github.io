@@ -22,7 +22,7 @@ jobs:
       - name: Install, build, and upload your site
         uses: withastro/action@v1
         with:
-          path: ./ddblock.astro # The root location of your Astro project inside the repository
+          path: . # The root location of your Astro project inside the repository
           node-version: 18 # The specific version of Node that should be used to build your site
           package-manager: npm # The Node package manager that should be used to install dependencies
 
