@@ -6,6 +6,6 @@ import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://blockchain-dresden.de',
-	integrations: [mdx(), sitemap(), tailwind()],
+  site: 'https://blockchain-dresden.de',
+  integrations: [mdx(), sitemap(), tailwind()],
 });
