@@ -12,8 +12,5 @@ tags: Blockchain, Bitcoin, Ethereum, Cryptocurrency
 
 ## Blockchain Stammtisch
 
-TEST
-
-Diesmal im Hellmuts in Dresden, ab 19:00 Uhr ist ein Tisch für uns bereit.
-
-Auch dieser Termin wurde schon vorab wieder in unserem [Telegram](https://t.me/+--ye6T-m7B0zZmEy) abgestimmt, also joined uns doch gerne, und bis Montag :) 
+Der Termin wird auch wieder in unserem [Telegram](https://t.me/+--ye6T-m7B0zZmEy) abgestimmt.
+Kommt gerne in unserem Telegram Channel vorbei und meldet euch bei uns.
