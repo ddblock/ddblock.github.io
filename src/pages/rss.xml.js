@@ -16,10 +16,10 @@ export async function GET(context) {
       // Optional fields
       categories: [post.data.categories, ...(post.data.tags || [])],
       content: post.data.event_date instanceof Date 
-          ? `Event Date: ${post.data.event_date.toLocaleDateString('de-DE')}${post.data.event_location_name ? ` at ${post.data.event_location_name}` : ''}`
-          : post.data.event_date === 'TBD' 
-              ? 'Event Date: To be determined'
-              : '',
+        ? `Event Date: ${post.data.event_date.toLocaleDateString('de-DE')}${post.data.event_location_name ? ` at ${post.data.event_location_name}` : ''}`
+        : post.data.event_date === 'TBD' 
+          ? 'Event Date: To be determined'
+          : '',
     })),
   });
 }

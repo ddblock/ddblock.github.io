@@ -30,7 +30,7 @@ export function generateICS(event: {
     `DESCRIPTION:${description}`,
     `LOCATION:${event.location}`,
     'END:VEVENT',
-    'END:VCALENDAR'
+    'END:VCALENDAR',
   ].join('\r\n');
 
   return icsContent;

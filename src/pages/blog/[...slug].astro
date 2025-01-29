@@ -28,18 +28,18 @@ const displayTitle = formatTitle(post, eventNumber);
 // Format event date if available
 const eventDate = post.data.event_date instanceof Date 
   ? post.data.event_date.toLocaleDateString('de-DE', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    })
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
   : 'Wird noch bekannt gegeben';
 
 const eventTime = post.data.event_date instanceof Date
   ? post.data.event_date.toLocaleTimeString('de-DE', {
-      hour: '2-digit',
-      minute: '2-digit',
-    }) + ' Uhr'
+    hour: '2-digit',
+    minute: '2-digit',
+  }) + ' Uhr'
   : 'TBD';
 
 // Generate ICS file content if this is an event with a date

@@ -19,7 +19,7 @@ const isFutureEvent = (date?: Date | 'TBD') => {
 
 // Get upcoming and recent posts
 const upcomingPosts = posts
-  .filter(post => isFutureEvent(post.data.event_date) || post.data.event_date === 'TBD')
+  .filter((post) => isFutureEvent(post.data.event_date) || post.data.event_date === 'TBD')
   .sort((a, b) => {
     const aIsTBD = a.data.event_date === 'TBD';
     const bIsTBD = b.data.event_date === 'TBD';
@@ -38,7 +38,7 @@ const upcomingPosts = posts
   .slice(0, 3);
 
 const recentPosts = posts
-  .filter(post => !isFutureEvent(post.data.event_date) && post.data.event_date !== 'TBD')
+  .filter((post) => !isFutureEvent(post.data.event_date) && post.data.event_date !== 'TBD')
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
   .slice(0, 3);
 ---
