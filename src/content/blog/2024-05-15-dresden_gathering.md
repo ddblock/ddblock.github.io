@@ -8,6 +8,4 @@ categories: stammtisch
 tags: ethereum
 ---
 
-## Blockchain Stammtisch
-
 Wir treffen uns wieder in entspannter Runde. Da das Wetter so wundervoll ist, diesmal Open-Air am City Beach an der Elbe.

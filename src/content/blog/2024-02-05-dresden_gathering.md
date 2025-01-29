@@ -8,13 +8,6 @@ categories: stammtisch
 tags: monero,farcaster,lens-protocol
 ---
 
-# Blockchain Gathering aka Blockchain Stammtisch
-
-## Blockchain Stammtisch
-
-- 📍 [Rausch Dresden, Bürgerstraße 36](https://maps.app.goo.gl/7GBfjxZkRS2JtahC8)
-- 📅 07.02.2024 - 19:00 Uhr
-
 Wir treffen uns in loser Runde im Restaurant Rausch, in Dresden Bürgerstrasse 36, am Mittwoch 7. Februar 19.00 Uhr geht es los. Meldet Euch gerne via [Meetup.com](https://www.meetup.com/de-DE/blockchainmeetupsaxony/events/299009391/) an. Ein Tisch ist reserviert.
 
 Themenvorschläge sind:

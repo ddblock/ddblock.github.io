@@ -8,8 +8,4 @@ categories: stammtisch
 tags: ethereum,fees,portfolio,tech,em2024
 ---
 
-# Blockchain Gathering aka Blockchain Stammtisch
-
-## Blockchain Stammtisch
-
 Wir treffen uns in geselliger Runde am Mittwoch 19. Juni 19:00 Uhr im Bottoms Up in der Dresdner Neustadt. Meldet Euch gerne via [Meetup.com](https://www.meetup.com/de-DE/blockchainmeetupsaxony/events/) an.

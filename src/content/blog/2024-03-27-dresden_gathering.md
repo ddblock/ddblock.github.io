@@ -8,8 +8,6 @@ categories: stammtisch
 tags: ethereum,dencunupgrade,blobs,fees,portfolio
 ---
 
-## Blockchain Stammtisch
-
 Wir treffen uns in loser Runde am Mittwoch 27. März 19:00 Uhr in der Lounge vom Hostel Mondpalast. Meldet Euch gerne via [Meetup.com](https://www.meetup.com/de-DE/blockchainmeetupsaxony/events/) an.
 
 Themenvorschläge sind:

@@ -8,9 +8,5 @@ categories: stammtisch
 tags: Blockchain, Bitcoin, Ethereum, Cryptocurrency
 ---
 
-# Blockchain Gathering aka Blockchain Stammtisch
-
-## Blockchain Stammtisch
-
 Der Termin wird auch wieder in unserem [Telegram](https://t.me/+--ye6T-m7B0zZmEy) abgestimmt.
 Kommt gerne in unserem Telegram Channel vorbei und meldet euch bei uns.

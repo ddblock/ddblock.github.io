@@ -8,10 +8,6 @@ categories: stammtisch
 tags: Blockchain, Bitcoin, Ethereum, Cryptocurrency
 ---
 
-# Blockchain Gathering aka Blockchain Stammtisch
-
-## Blockchain Stammtisch
-
 Naaaa, seid ihr alle gut ins neue Jahr gekommen?
 
 Die Sehnsucht nach Austausch mit Gleichgesinnten steigt schon wieder ins Unermessliche, daher treffen wir uns am kommenden Montag, 13.01.2025, erneut zum Krypto-Stammtisch!
