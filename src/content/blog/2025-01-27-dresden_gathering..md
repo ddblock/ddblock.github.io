@@ -8,5 +8,11 @@ categories: stammtisch
 tags: Blockchain, Bitcoin, Ethereum, Cryptocurrency
 ---
 
+Mögliche Themen sind:
+
+- Blockchain Predictions 2025 - im noch recht jungem Jahr wollen wir gemeinsam in die Zukunft schauen und allerlei mehr oder weniger gewagte Vorhersagen machen.
+- Blochain und AI - Wie wird sich die aktuelle KI Entwicklung Blockchain bzw.Crypto auswirken?
+- und natürlich alles, was Euch interessiert, bringt gerne Themen mit.
+
 Der Termin wird auch wieder in unserem [Telegram](https://t.me/+--ye6T-m7B0zZmEy) abgestimmt.
 Kommt gerne in unserem Telegram Channel vorbei und meldet euch bei uns.
