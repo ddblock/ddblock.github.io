@@ -12,6 +12,7 @@ Mögliche Themen sind:
 
 - Blockchain Predictions 2025 - im noch recht jungem Jahr wollen wir gemeinsam in die Zukunft schauen und allerlei mehr oder weniger gewagte Vorhersagen machen.
 - Blochain und AI - Wie wird sich die aktuelle KI Entwicklung Blockchain bzw.Crypto auswirken?
+- Pectra Upgrade - Was ist drin, was bedeutet das für die Zukunft von Ethereum?
 - und natürlich alles, was Euch interessiert, bringt gerne Themen mit.
 
 Der Termin wird auch wieder in unserem [Telegram](https://t.me/+--ye6T-m7B0zZmEy) abgestimmt.
