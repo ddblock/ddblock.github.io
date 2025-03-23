@@ -1,5 +1,9 @@
 function formatICSDate(date: Date): string {
-  return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+  // Convert to UTC for iCalendar format
+  // We need to preserve the original time in the user's timezone
+  // but format it according to iCalendar specs (UTC/Z format)
+  const userTimezoneDate = new Date(date);
+  return userTimezoneDate.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
 }
 
 export function generateICS(event: {
@@ -11,7 +15,7 @@ export function generateICS(event: {
 }) {
   // Events are typically 2 hours long
   const endDate = new Date(event.startDate.getTime() + 2 * 60 * 60 * 1000);
-  
+
   const description = [
     event.description,
     `Location: ${event.location}`,
