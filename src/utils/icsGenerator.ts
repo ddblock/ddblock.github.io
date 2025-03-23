@@ -1,9 +1,14 @@
 function formatICSDate(date: Date): string {
-  // Convert to UTC for iCalendar format
-  // We need to preserve the original time in the user's timezone
-  // but format it according to iCalendar specs (UTC/Z format)
-  const userTimezoneDate = new Date(date);
-  return userTimezoneDate.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+  // Extract the local date parts
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const seconds = String(date.getSeconds()).padStart(2, '0');
+
+  // Format as YYYYMMDDTHHmmSS
+  return `${year}${month}${day}T${hours}${minutes}${seconds}Z`;
 }
 
 export function generateICS(event: {
