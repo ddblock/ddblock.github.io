@@ -1,7 +1,7 @@
 ---
 title: 'Blockchain Stammtisch Dresden'
 date: 2025-03-23T00:00:00.000Z
-event_date: '2025-03-24T19:00:00.000Z'
+event_date: '2025-03-24T18:00:00.000Z'
 event_location_name: 'Hellmuts Dresden'
 event_location_url: 'https://maps.app.goo.gl/o2nscNaUig7ssk2a8'
 categories: stammtisch
